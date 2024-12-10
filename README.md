@@ -4,6 +4,192 @@
 
 This project demonstrates a Flask-based web application for managing data in MongoDB, providing a simple and intuitive interface for performing CRUD (Create, Read, Update, Delete) operations on a NoSQL database.
 
+## MongoDB Command-Line Operations
+
+### Starting MongoDB Server
+
+#### On Windows:
+```bash
+# Start MongoDB service
+net start mongodb
+
+# Alternative method
+"C:\Program Files\MongoDB\Server\<version>\bin\mongod.exe"
+```
+
+#### On macOS (using Homebrew):
+```bash
+brew services start mongodb-community
+```
+
+#### On Linux:
+```bash
+# For systemd
+sudo systemctl start mongod
+
+# Alternative method
+sudo service mongod start
+```
+
+### Connecting to MongoDB
+
+#### Launch MongoDB Shell
+```bash
+# Connect to local MongoDB instance
+mongo
+
+# Connect to a specific host
+mongo "mongodb://hostname:port"
+```
+
+### Database Operations
+
+#### Create and Switch to a New Database
+```bash
+# Create or switch to a database
+use mydatabase
+```
+
+#### Check Current Database
+```bash
+# Display current database
+db
+```
+
+#### List All Databases
+```bash
+# Show available databases
+show dbs
+```
+
+### Collection Management
+
+#### Create a New Collection
+```bash
+# Create a collection explicitly
+db.createCollection("users")
+
+# Collections are also created automatically when you first insert a document
+db.users.insertOne({"name": "John Doe", "age": 30})
+```
+
+#### List Collections
+```bash
+# Show all collections in current database
+show collections
+```
+
+### Basic CRUD Operations in MongoDB Shell
+
+#### Insert Documents
+```bash
+# Insert a single document
+db.users.insertOne({
+    "name": "Alice",
+    "age": 25,
+    "email": "alice@example.com"
+})
+
+# Insert multiple documents
+db.users.insertMany([
+    {"name": "Bob", "age": 30},
+    {"name": "Charlie", "age": 35}
+])
+```
+
+#### Query Documents
+```bash
+# Find all documents in a collection
+db.users.find()
+
+# Find documents with a specific condition
+db.users.find({"age": {"$gt": 25}})
+
+# Find a single document
+db.users.findOne({"name": "Alice"})
+```
+
+#### Update Documents
+```bash
+# Update a single document
+db.users.updateOne(
+    {"name": "Alice"},
+    {"$set": {"age": 26}}
+)
+
+# Update multiple documents
+db.users.updateMany(
+    {"age": {"$lt": 30}},
+    {"$inc": {"age": 1}}
+)
+```
+
+#### Delete Documents
+```bash
+# Delete a single document
+db.users.deleteOne({"name": "Bob"})
+
+# Delete multiple documents
+db.users.deleteMany({"age": {"$gte": 30}})
+```
+
+### User Management
+
+#### Create a New User
+```bash
+# Switch to admin database
+use admin
+
+# Create a new user with read/write access
+db.createUser({
+    user: "myappuser",
+    pwd: "strongpassword",
+    roles: [
+        { role: "readWrite", db: "mydatabase" }
+    ]
+})
+```
+
+### Backup and Restore
+
+#### Backup a Database
+```bash
+# Backup a single database
+mongodump --db mydatabase
+
+# Backup with authentication
+mongodump -u myappuser -p strongpassword --authenticationDatabase admin --db mydatabase
+```
+
+#### Restore a Database
+```bash
+# Restore a database
+mongorestore --db mydatabase /path/to/backup
+
+# Restore with authentication
+mongorestore -u myappuser -p strongpassword --authenticationDatabase admin --db mydatabase /path/to/backup
+```
+
+### Troubleshooting
+
+#### Check MongoDB Service Status
+```bash
+# Windows
+net start mongodb
+
+# Linux (systemd)
+sudo systemctl status mongod
+
+# macOS (Homebrew)
+brew services list
+```
+
+## Additional Resources
+
+- [Official MongoDB Documentation](https://docs.mongodb.com/)
+- [MongoDB University](https://university.mongodb.com/)
+- [MongoDB Community Forums](https://www.mongodb.com/community/forums/)
+
 ## Features
 
 - **Flexible Data Management**: Leverage MongoDB's schema-less document structure
