@@ -24,6 +24,7 @@ This project demonstrates a Flask-based web application for managing data in Mon
    ```bash
    git clone https://github.com/yourusername/mongodb-data-management.git
    cd mongodb-data-management
+   cd my_flask_app
    ```
 
 2. Install dependencies:
